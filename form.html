@@ -1,0 +1,61 @@
+<? php
+include("connect.php");
+?>
+
+<html>
+<head>
+  <title>Form Validation</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="myForm" onsubmit="validateForm(); return false;">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+
+    <label for="mobile">Mobile:</label>
+    <input type="tel" id="mobile" name="mobile">
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email">
+
+    <p class="error" id="error-message"></p>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateForm() {
+      var name = document.getElementById('name').value.trim();
+      var mobile = document.getElementById('mobile').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var errorMessage = document.getElementById('error-message');
+
+      errorMessage.innerHTML = '';
+
+      if (name === '' || mobile === '' || email === '') {
+        errorMessage.innerHTML = 'All fields are required.';
+        return;
+      }
+   
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        errorMessage.innerHTML = 'Please enter a valid email address.';
+        return;
+      }
+
+      var mobileRegex = /^[0-9]{10}$/;
+      if (!mobileRegex.test(mobile)) {
+        errorMessage.innerHTML = 'Please enter a valid 10-digit mobile number.';
+        return;
+      }
+      alert('Form submitted successfully!');
+    }
+  </script>
+
+</body>
+</html>
